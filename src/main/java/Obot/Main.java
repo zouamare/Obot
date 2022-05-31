@@ -13,9 +13,7 @@ import javax.security.auth.login.LoginException;
 public class Main{
     public static void main(String[] args) throws LoginException {
 
-        //token : OTgwODQwNTE2MDMzODQzMjAw.GSIS--.4a8JTtQWfjn5KMTBfArjvH3auxM1WhmGwcXjQY
-
-        JDA jda = JDABuilder.createDefault("OTgwODQwNTE2MDMzODQzMjAw.GSIS--.4a8JTtQWfjn5KMTBfArjvH3auxM1WhmGwcXjQY").build();
+        JDA jda = JDABuilder.createDefault(System.getenv("token")).build();
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         jda.addEventListener(new ObotListenerAdapter());
 
