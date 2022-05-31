@@ -19,8 +19,12 @@ test {
     useJUnitPlatform()
 }
 
-manifest {
-    attributes 'Obot': 'Obot.Main'
+jar {
+    manifest {
+        attributes (
+                'Obot': 'Obot.Main'
+        )
+    }
 }
 
 task stage(type: Copy, dependsOn: [clean, build]) {
