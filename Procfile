@@ -1,1 +1,1 @@
-worker: java -jar out/artifacts/Obot_jar/Obot.jar
+web: java $JAVA_OPTS -cp java/Obot/Main.java
