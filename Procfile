@@ -1,1 +1,1 @@
-worker: java -jar target/Bot.jar
+worker: java -jar out/artifacts/Obot_jar/Obot.jar
