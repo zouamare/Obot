@@ -1,1 +1,1 @@
-web: java -jar out/artifacts/Obot_jar/Obot.jar
+web: java $JAVA_OPTS -jar app.jar
