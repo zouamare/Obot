@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Main-Class: Obot.Main
-Class-Path: out/artifacts/Obot_jar/Obot.jar
+Class-Path: 
 
