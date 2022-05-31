@@ -20,21 +20,6 @@ dependencies {
     implementation('net.dv8tion:JDA:5.0.0-alpha.9')
 }
 
-
-
-//task stage(type: Copy, dependsOn: [clean, build]) {
-//    from jar.archivePath
-//    into project.rootDir
-//    rename {
-//        'app.jar'
-//    }
-//}
-//stage.mustRunAfter(clean)
-//
-//clean {
-//    project.file('app.jar').delete()
-//}
-
 task stage(dependsOn: ['build','shadowJar','clean','test'])
 build.mustRunAfter clean
 build.mustRunAfter test
