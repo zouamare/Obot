@@ -9,9 +9,10 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
+import java.io.IOException;
 
 public class Main{
-    public static void main(String[] args) throws LoginException {
+    public static void main(String[] args) throws LoginException, IOException {
 
         JDA jda = JDABuilder.createDefault(System.getenv("token")).build();
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
