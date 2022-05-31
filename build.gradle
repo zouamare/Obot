@@ -22,8 +22,8 @@ test {
 jar {
     manifest {
         attributes(
-                'Class-Path': configurations.implementation(collect { it.getName() }.join(' ')),
-                'Main-Class': 'Obot.Main'
+                'Class-Path': configurations.implementation(collect { it.getName() }.join(' '),
+                'Main-Class': 'Obot.Main')
         )
     }
 }
