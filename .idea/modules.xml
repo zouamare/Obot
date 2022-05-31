@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Desktop.Obot.iml" filepath="$PROJECT_DIR$/.idea/modules/Desktop.Obot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Obot.iml" filepath="$PROJECT_DIR$/Obot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Obot.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Obot.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Obot.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Obot.test.iml" />
+    </modules>
+  </component>
+</project>
