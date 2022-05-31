@@ -1,10 +1,15 @@
+group 'Obot'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: "com.github.johnrengelman.shadow"
 
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
-        classpath "gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0"
+        classpath "com.github.jengelman.gradle.plugins:shadow:7.0.0"
     }
 }
 
@@ -12,11 +17,6 @@ plugins {
     id 'java'
     id "com.github.johnrengelman.shadow" version "7.0.0"
 }
-
-apply plugin: "com.github.johnrengelman.shadow"
-
-group 'Obot'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
