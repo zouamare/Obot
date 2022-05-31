@@ -35,19 +35,6 @@ public class ObotListenerAdapter extends ListenerAdapter {
                 event.getChannel().sendMessage(IO.printNoAttendanceCheckRecord()).queue();
             }
         }
-
-        // ********필요 없는 내용**********
-        if(event.isFromType(ChannelType.PRIVATE)){
-            System.out.printf("[PM] %s: %s\n", event.getAuthor().getName(),
-                    event.getMessage().getContentDisplay());
-        }
-        else{
-            System.out.printf("[%s][%s] %s: %s\n", event.getGuild().getName(),  //서버 이름
-                    event.getTextChannel().getName(),   //채널 이름
-                    event.getMember().getEffectiveName(),   //메세지를 보낸 멤버명
-                    event.getMessage().getContentDisplay());    //메세지 내용
-        }
-        // ********필요 없는 내용**********
     }
 
     private LocalDateTime getTodayDateTime(){
