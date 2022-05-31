@@ -4,13 +4,13 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:7.1.2'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.3'
     }
 }
 
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'com.github.johnrengelman.shadow' version '2.0.3'
 }
 
 group 'Obot'
