@@ -19,6 +19,15 @@ test {
     useJUnitPlatform()
 }
 
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'Obot.Main'
+        )
+    }
+}
+
 task stage(type: Copy, dependsOn: [clean, build]) {
     from jar.archivePath
     into project.rootDir
