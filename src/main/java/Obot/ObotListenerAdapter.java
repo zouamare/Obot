@@ -46,7 +46,7 @@ public class ObotListenerAdapter extends ListenerAdapter {
         }
 
         if(event.getMessage().getContentRaw().startsWith("0명언")){
-            event.getChannel().sendMessage(IO.printLifeQuote(lifeQuote.getLifeQuoteRandom()));
+            event.getChannel().sendMessage(IO.printLifeQuote(lifeQuote.getLifeQuoteRandom())).queue();
         }
     }
 
