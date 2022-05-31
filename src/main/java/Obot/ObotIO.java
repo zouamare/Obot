@@ -20,4 +20,8 @@ public class ObotIO {
     public String printLeavingCheckMessage(LocalDateTime now){
         return "["+now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"))+"] 퇴실체크 되었습니다.";
     }
+
+    public String printLifeQuote(String lifeQuoteRandom) {
+        return "[오늘의 명언]\n" + lifeQuoteRandom;
+    }
 }

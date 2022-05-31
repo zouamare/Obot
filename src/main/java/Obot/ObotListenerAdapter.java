@@ -5,13 +5,22 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class ObotListenerAdapter extends ListenerAdapter {
-    HashMap<String,LocalDateTime> timeTable = new HashMap<>();  //사용자의 출석체크 정보를 저장하는 hash map
-    ObotIO IO = new ObotIO();
+    HashMap<String,LocalDateTime> timeTable;  //사용자의 출석체크 정보를 저장하는 hash map
+    ObotIO IO;
+    LifeQuote lifeQuote;
+
+    public ObotListenerAdapter() throws IOException {
+        this.timeTable = new HashMap<>();
+        this.IO = new ObotIO();
+        this.lifeQuote = new LifeQuote();
+    }
+
     @Override
     public void onMessageReceived(MessageReceivedEvent event){  // message가 생성될 때마다 호출되는 메소드
         if(event.getAuthor().isBot())   // 봇의 대화는 무시
@@ -34,6 +43,10 @@ public class ObotListenerAdapter extends ListenerAdapter {
             else{
                 event.getChannel().sendMessage(IO.printNoAttendanceCheckRecord()).queue();
             }
+        }
+
+        if(event.getMessage().getContentRaw().startsWith("0명언")){
+            event.getChannel().sendMessage(IO.printLifeQuote(lifeQuote.getLifeQuoteRandom()));
         }
     }
 
