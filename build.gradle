@@ -1,5 +1,5 @@
+
 plugins {
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'java'
 }
 
@@ -16,11 +16,24 @@ dependencies {
     implementation("net.dv8tion:JDA:5.0.0-alpha.9")
 }
 
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    }
+}
+
 test {
     useJUnitPlatform()
 }
 
 jar {
+    finalizedBy shadowJar
     manifest {
         attributes (
                 'Obot': 'Obot.Main'
