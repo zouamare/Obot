@@ -4,14 +4,17 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.3'
+        classpath "gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0"
     }
 }
 
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '2.0.3'
+    id "com.github.johnrengelman.shadow" version "7.0.0"
 }
+
+apply plugin: 'java'
+apply plugin: "com.github.johnrengelman.shadow"
 
 group 'Obot'
 version '1.0-SNAPSHOT'
@@ -25,9 +28,6 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation("net.dv8tion:JDA:5.0.0-alpha.9")
 }
-
-apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'
 
 test {
     useJUnitPlatform()
