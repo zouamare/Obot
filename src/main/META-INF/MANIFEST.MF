@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Main-Class: Obot.Main
-Class-Path: src/main/java
+Class-Path: junit-3.8.2.jar
 

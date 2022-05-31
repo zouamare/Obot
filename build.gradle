@@ -1,57 +1,46 @@
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:7.0.0"
-    }
-}
-
 plugins {
     id 'java'
-    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id 'com.github.johnrengelman.shadow' version '7.1.1'
 }
 
 group 'Obot'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
-apply plugin: "com.github.johnrengelman.shadow"
-
-
 repositories {
     mavenCentral()
-}
-
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    implementation("net.dv8tion:JDA:5.0.0-alpha.9")
 }
 
 test {
     useJUnitPlatform()
 }
 
-jar {
-    finalizedBy shadowJar
-    manifest {
-        attributes (
-                'Obot': 'Obot.Main'
-        )
-    }
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation('net.dv8tion:JDA:5.0.0-alpha.9')
 }
 
-task stage(type: Copy, dependsOn: [clean, build]) {
-    from jar.archivePath
-    into project.rootDir
-    rename {
-        'app.jar'
-    }
-}
-stage.mustRunAfter(clean)
 
-clean {
-    project.file('app.jar').delete()
+
+//task stage(type: Copy, dependsOn: [clean, build]) {
+//    from jar.archivePath
+//    into project.rootDir
+//    rename {
+//        'app.jar'
+//    }
+//}
+//stage.mustRunAfter(clean)
+//
+//clean {
+//    project.file('app.jar').delete()
+//}
+
+task stage(dependsOn: ['build','shadowJar','clean','test'])
+build.mustRunAfter clean
+build.mustRunAfter test
+
+jar{
+    manifest{
+        attributes 'Class-Path': '/libs/Obot-1.0-SNAPSHOT', 'Main-class': 'Obot.Main'
+    }
 }

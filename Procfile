@@ -1,1 +1,1 @@
-web: java -cp app.jar Obot.Main
+worker: java -jar build/libs/Obot-1.0-SNAPSHOT-all.jar
