@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar app.jar
+web: java -cp app.jar com.Obot.Main
