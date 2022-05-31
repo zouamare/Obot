@@ -13,7 +13,6 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.0.0"
 }
 
-apply plugin: 'java'
 apply plugin: "com.github.johnrengelman.shadow"
 
 group 'Obot'
