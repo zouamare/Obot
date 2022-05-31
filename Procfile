@@ -1,1 +1,1 @@
-web: java -cp app.jar com.Obot.Main
+web: java -cp app.jar Obot.Main

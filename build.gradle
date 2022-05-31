@@ -22,7 +22,7 @@ test {
 jar {
     manifest {
         attributes (
-                'Obot': 'com.Obot.Main'
+                'Obot': 'Obot.Main'
         )
     }
 }
