@@ -38,7 +38,7 @@ public class ObotListenerAdapter extends ListenerAdapter {
                 LocalDateTime now = getTodayDateTime();
                 event.getChannel().sendMessage(IO.printLeavingCheckMessage(now)).queue();
                 sendMessage(event.getAuthor(), IO.printTodayStudyTime(calculateTime(before, now)));
-                timeTable.remove(event.getMember().getEffectiveName());
+                timeTable.remove(event.getMember().getId());
             }
             else{
                 event.getChannel().sendMessage(IO.printNoAttendanceCheckRecord()).queue();
