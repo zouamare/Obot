@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 
 public class ObotListenerAdapter extends ListenerAdapter {
@@ -52,7 +54,7 @@ public class ObotListenerAdapter extends ListenerAdapter {
 
     private LocalDateTime getTodayDateTime(){
         // 오늘 날짜와 시간을 반환하는 메소드
-        return LocalDateTime.now();
+        return LocalDateTime.now(ZoneId.of("Asia/Seoul"));
     }
 
     private long getSeconds(LocalDateTime before, LocalDateTime now){
