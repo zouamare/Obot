@@ -5,6 +5,8 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -27,24 +29,65 @@ public class ObotListenerAdapter extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event){  // message가 생성될 때마다 호출되는 메소드
         if(event.getAuthor().isBot())   // 봇의 대화는 무시
             return;
-
+        String userid;
+        String serverid;
         if(event.getMessage().getContentRaw().startsWith("0ㅊㅊ")){   // 출석체크
+            userid=event.getMember().getId();
+            serverid=event.getGuild().getId();
             LocalDateTime now = getTodayDateTime();
-            timeTable.put(event.getMember().getId(),now);
-            event.getChannel().sendMessage(IO.printAttendanceCheckMessage(now)).queue();
+            EntityManager em = Main.emf.createEntityManager();
+            String selectOne= "select m from Member m where m.serverid ='"+serverid+"'and m.userid='" +userid+"'";
+            EntityTransaction tx= em.getTransaction();
+            tx.begin();
+            Member member;
+            try {
+                member = (Member) em.createQuery(selectOne).getSingleResult();
+            }catch (Exception e){
+                member = null;
+            }
+            if(member==null){
+                member=new Member(null,userid,serverid,now,null,null,null);
+                em.persist(member);
+            }
+            if(member.getIndate()==null){
+                member.setIndate(now);
+                tx.commit();
+                event.getChannel().sendMessage(IO.printAttendanceCheckMessage(now)).queue();
+            }else{
+                event.getChannel().sendMessage(IO.printPreAttendanceCheckMessage()).queue();
+            }
+//            timeTable.put(event.getMember().getId(),now);
+            em.close();
+
         }
 
         if(event.getMessage().getContentRaw().startsWith("0ㅌㅊ")){   // 퇴실체크
-            if(timeTable.containsKey(event.getMember().getId())){
-                LocalDateTime before = timeTable.get(event.getMember().getId());
+            userid=event.getMember().getId();
+            serverid=event.getGuild().getId();
+            EntityManager em = Main.emf.createEntityManager();
+            String selectOne= "select m from Member m where m.serverid ='"+serverid+"'and m.userid='" +userid+"'";
+            EntityTransaction tx =  em.getTransaction();
+            Member member;
+            try {
+                member = (Member) em.createQuery(selectOne).getSingleResult();
+            }catch (Exception e){
+                member = null;
+            }
+            if(member!=null&&member.getIndate()!=null){
+                LocalDateTime before = member.getIndate();
+//                LocalDateTime before = timeTable.get(event.getMember().getId());
                 LocalDateTime now = getTodayDateTime();
                 event.getChannel().sendMessage(IO.printLeavingCheckMessage(now)).queue();
                 sendMessage(event.getAuthor(), IO.printTodayStudyTime(calculateTime(before, now)));
-                timeTable.remove(event.getMember().getId());
+//                timeTable.remove(event.getMember().getId());
+                member.setIndate(null);
+                member.setExp((member.getExp())+(getSeconds(before,now)/900));
+                tx.commit();
             }
             else{
                 event.getChannel().sendMessage(IO.printNoAttendanceCheckRecord()).queue();
             }
+            em.close();
         }
 
         if(event.getMessage().getContentRaw().startsWith("0명언")){

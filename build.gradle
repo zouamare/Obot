@@ -18,8 +18,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation('net.dv8tion:JDA:5.0.0-alpha.9')
+    implementation group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.6.7.Final'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.29'
 }
-
 task stage(dependsOn: ['build','shadowJar','clean','test'])
 build.mustRunAfter clean
 build.mustRunAfter test
