@@ -2,6 +2,7 @@ package Obot;
 
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -23,34 +24,57 @@ public class ObotListenerAdapter extends ListenerAdapter {
         this.lifeQuote = new LifeQuote();
     }
 
-    @Override
-    public void onMessageReceived(MessageReceivedEvent event){  // message가 생성될 때마다 호출되는 메소드
-        if(event.getAuthor().isBot())   // 봇의 대화는 무시
-            return;
-
-        if(event.getMessage().getContentRaw().startsWith("0ㅊㅊ")){   // 출석체크
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent event){
+        if(event.getName().equals("출첵")){
             LocalDateTime now = getTodayDateTime();
             timeTable.put(event.getMember().getId(),now);
             event.getChannel().sendMessage(IO.printAttendanceCheckMessage(now)).queue();
         }
-
-        if(event.getMessage().getContentRaw().startsWith("0ㅌㅊ")){   // 퇴실체크
+        else if(event.getName().equals("퇴첵")){
             if(timeTable.containsKey(event.getMember().getId())){
                 LocalDateTime before = timeTable.get(event.getMember().getId());
                 LocalDateTime now = getTodayDateTime();
                 event.getChannel().sendMessage(IO.printLeavingCheckMessage(now)).queue();
-                sendMessage(event.getAuthor(), IO.printTodayStudyTime(calculateTime(before, now)));
+                sendMessage(event.getUser(), IO.printTodayStudyTime(calculateTime(before, now)));
                 timeTable.remove(event.getMember().getId());
             }
             else{
                 event.getChannel().sendMessage(IO.printNoAttendanceCheckRecord()).queue();
             }
         }
-
-        if(event.getMessage().getContentRaw().startsWith("0명언")){
+        else if(event.getName().equals("명언")){
             event.getChannel().sendMessage(IO.printLifeQuote(lifeQuote.getLifeQuoteRandom())).queue();
         }
     }
+
+//    @Override
+//    public void onMessageReceived(MessageReceivedEvent event){  // message가 생성될 때마다 호출되는 메소드
+//        if(event.getAuthor().isBot())   // 봇의 대화는 무시
+//            return;
+//
+//        if(event.getMessage().getContentRaw().startsWith("0ㅊㅊ")){   // 출석체크
+//            LocalDateTime now = getTodayDateTime();
+//            timeTable.put(event.getMember().getId(),now);
+//            event.getChannel().sendMessage(IO.printAttendanceCheckMessage(now)).queue();
+//        }
+//
+//        if(event.getMessage().getContentRaw().startsWith("0ㅌㅊ")){   // 퇴실체크
+//            if(timeTable.containsKey(event.getMember().getId())){
+//                LocalDateTime before = timeTable.get(event.getMember().getId());
+//                LocalDateTime now = getTodayDateTime();
+//                event.getChannel().sendMessage(IO.printLeavingCheckMessage(now)).queue();
+//                sendMessage(event.getAuthor(), IO.printTodayStudyTime(calculateTime(before, now)));
+//                timeTable.remove(event.getMember().getId());
+//            }
+//            else{
+//                event.getChannel().sendMessage(IO.printNoAttendanceCheckRecord()).queue();
+//            }
+//        }
+//
+//        if(event.getMessage().getContentRaw().startsWith("0명언")){
+//            event.getChannel().sendMessage(IO.printLifeQuote(lifeQuote.getLifeQuoteRandom())).queue();
+//        }
+//    }
 
     private LocalDateTime getTodayDateTime(){
         // 오늘 날짜와 시간을 반환하는 메소드
