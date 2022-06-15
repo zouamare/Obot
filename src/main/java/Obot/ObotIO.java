@@ -24,4 +24,8 @@ public class ObotIO {
     public String printLifeQuote(String lifeQuoteRandom) {
         return "[오늘의 명언]\n" + lifeQuoteRandom;
     }
+
+    public String printPreAttendanceCheckMessage(){
+        return "이미 출석체크를 하셨습니다.";
+    }
 }
