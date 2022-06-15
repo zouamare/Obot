@@ -25,19 +25,12 @@ public class Main{
         map.put("javax.persistence.jdbc.user",System.getenv("dbid"));
         map.put("javax.persistence.jdbc.password",System.getenv("dbpassword"));
         map.put("javax.persistence.jdbc.url",System.getenv("dburl"));
-//        JDA jda = JDABuilder.createDefault(System.getenv("token")).build();
-//        jda.getPresence().setStatus(OnlineStatus.ONLINE);
-//        jda.addEventListener(new ObotListenerAdapter());
         emf = Persistence.createEntityManagerFactory("Obot",map);
-        JDA jda = JDABuilder.createLight(System.getenv("token"), Collections.emptyList())
-                .addEventListeners(new ObotListenerAdapter())
-                .setActivity(Activity.playing("공부중:pencil:"))
+
+        JDA jda = JDABuilder.createDefault(System.getenv("token"))
+                .setActivity(Activity.playing("공부"))    // 공부 하는 중 표시
                 .build();
-//        jda.upsertCommand("출첵", "출석체크");
-        jda.updateCommands().addCommands(
-                Commands.slash("출첵","출석체크"),
-                Commands.slash("퇴첵","퇴실체크"),
-                Commands.slash("명언","명언보기")
-        ).queue();
+        jda.getPresence().setStatus(OnlineStatus.ONLINE);
+        jda.addEventListener(new ObotListenerAdapter());
     }
 }
