@@ -19,9 +19,9 @@ public class Main{
     static EntityManagerFactory emf;
     public static void main(String[] args) throws LoginException, IOException {
         Map<String,String> map= new HashMap<>();
-        map.put("dbid",System.getenv("dbid"));
-        map.put("dbpassword",System.getenv("dbpassword"));
-        map.put("dburl",System.getenv("dburl"));
+        map.put("javax.persistence.jdbc.user",System.getenv("dbid"));
+        map.put("javax.persistence.jdbc.password",System.getenv("dbpassword"));
+        map.put("javax.persistence.jdbc.url",System.getenv("dburl"));
 
         emf = Persistence.createEntityManagerFactory("Obot",map);
         JDA jda = JDABuilder.createDefault(System.getenv("token")).build();

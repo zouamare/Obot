@@ -32,26 +32,21 @@ public class ObotListenerAdapter extends ListenerAdapter {
         String userid;
         String serverid;
         if(event.getMessage().getContentRaw().startsWith("0ㅊㅊ")){   // 출석체크
-            event.getChannel().sendMessage("출석체크 들어왔어용").queue();
             userid=event.getMember().getId();
             serverid=event.getGuild().getId();
             LocalDateTime now = getTodayDateTime();
             EntityManager em = Main.emf.createEntityManager();
             String selectOne= "select m from Member m where m.serverid ='"+serverid+"'and m.userid='" +userid+"'";
             EntityTransaction tx= em.getTransaction();
-            event.getChannel().sendMessage("트랜잭션 진입").queue();
             tx.begin();
             Member member;
             try {
-                event.getChannel().sendMessage("쿼리 전").queue();
                 member =  em.createQuery(selectOne,Member.class).getSingleResult();
-                event.getChannel().sendMessage("멤버생성").queue();
             }catch (Exception e){
-                event.getChannel().sendMessage("member는 null입니다").queue();
                 member = null;
             }
             if(member==null){
-                member=new Member(null,userid,serverid,now,null,null,null);
+                member=new Member(null,userid,serverid,null,null,0L,0L);
                 em.persist(member);
             }
             if(member.getIndate()==null){
@@ -87,7 +82,7 @@ public class ObotListenerAdapter extends ListenerAdapter {
                 sendMessage(event.getAuthor(), IO.printTodayStudyTime(calculateTime(before, now)));
 //                timeTable.remove(event.getMember().getId());
                 member.setIndate(null);
-                member.setExp((member.getExp())+(getSeconds(before,now)/900));
+                member.setExp((Long) (member.getExp())+(getSeconds(before,now)/900));
                 tx.commit();
             }
             else{
