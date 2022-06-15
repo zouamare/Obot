@@ -41,7 +41,8 @@ public class ObotListenerAdapter extends ListenerAdapter {
             tx.begin();
             Member member;
             try {
-                member = (Member) em.createQuery(selectOne).getSingleResult();
+                member =  em.createQuery(selectOne,Member.class).getSingleResult();
+                event.getChannel().sendMessage("멤버생성").queue();
             }catch (Exception e){
                 member = null;
             }
@@ -67,9 +68,10 @@ public class ObotListenerAdapter extends ListenerAdapter {
             EntityManager em = Main.emf.createEntityManager();
             String selectOne= "select m from Member m where m.serverid ='"+serverid+"'and m.userid='" +userid+"'";
             EntityTransaction tx =  em.getTransaction();
+            tx.begin();
             Member member;
             try {
-                member = (Member) em.createQuery(selectOne).getSingleResult();
+                member =  em.createQuery(selectOne,Member.class).getSingleResult();
             }catch (Exception e){
                 member = null;
             }
