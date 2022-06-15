@@ -39,6 +39,7 @@ public class ObotListenerAdapter extends ListenerAdapter {
             EntityManager em = Main.emf.createEntityManager();
             String selectOne= "select m from Member m where m.serverid ='"+serverid+"'and m.userid='" +userid+"'";
             EntityTransaction tx= em.getTransaction();
+            event.getChannel().sendMessage("트랜잭션 진입").queue();
             tx.begin();
             Member member;
             try {
@@ -46,6 +47,7 @@ public class ObotListenerAdapter extends ListenerAdapter {
                 member =  em.createQuery(selectOne,Member.class).getSingleResult();
                 event.getChannel().sendMessage("멤버생성").queue();
             }catch (Exception e){
+                event.getChannel().sendMessage("member는 null입니다").queue();
                 member = null;
             }
             if(member==null){
