@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -30,8 +31,13 @@ public class Main{
         emf = Persistence.createEntityManagerFactory("Obot",map);
         JDA jda = JDABuilder.createLight(System.getenv("token"), Collections.emptyList())
                 .addEventListeners(new ObotListenerAdapter())
-                .setActivity(Activity.playing("Type /출첵"))
+                .setActivity(Activity.playing("공부중:pencil:"))
                 .build();
-        jda.upsertCommand("출첵", "출석체크");
+//        jda.upsertCommand("출첵", "출석체크");
+        jda.updateCommands().addCommands(
+                Commands.slash("출첵","출석체크"),
+                Commands.slash("퇴첵","퇴실체크"),
+                Commands.slash("명언","명언보기")
+        ).queue();
     }
 }
