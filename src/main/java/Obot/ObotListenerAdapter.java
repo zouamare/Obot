@@ -32,6 +32,7 @@ public class ObotListenerAdapter extends ListenerAdapter {
         String userid;
         String serverid;
         if(event.getMessage().getContentRaw().startsWith("0ㅊㅊ")){   // 출석체크
+            event.getChannel().sendMessage("출석체크 들어왔어용").queue();
             userid=event.getMember().getId();
             serverid=event.getGuild().getId();
             LocalDateTime now = getTodayDateTime();
@@ -41,6 +42,7 @@ public class ObotListenerAdapter extends ListenerAdapter {
             tx.begin();
             Member member;
             try {
+                event.getChannel().sendMessage("쿼리 전").queue();
                 member =  em.createQuery(selectOne,Member.class).getSingleResult();
                 event.getChannel().sendMessage("멤버생성").queue();
             }catch (Exception e){
