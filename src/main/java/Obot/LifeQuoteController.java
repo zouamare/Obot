@@ -2,16 +2,17 @@ package Obot;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Random;
 
-public class LifeQuote{
+public class LifeQuoteController {
     File file = null;
     ArrayList<String> quoteList;
+    ObotIO IO;
 
-    public LifeQuote() throws IOException {
+    public LifeQuoteController() throws IOException {
         this.file = new File("lifeQuotes.txt");
         quoteList = new ArrayList<>();
+        this.IO = new ObotIO();
         initQuotes();
     }
 
@@ -25,7 +26,7 @@ public class LifeQuote{
     }
 
     public String getLifeQuoteRandom(){
-        return quoteList.get(makeRandomValue());
+        return IO.printLifeQuote(quoteList.get(makeRandomValue()));
     }
 
     private int makeRandomValue() {
