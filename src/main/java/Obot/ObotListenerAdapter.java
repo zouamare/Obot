@@ -20,7 +20,7 @@ public class ObotListenerAdapter extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (event.getName().equals("출첵")) {
-             String response = attendance.startAttendanceCheck(new ID(event.getMember().getId(),event.getGuild().getId()));
+             String response = attendance.startAttendanceCheck(new ID(event.getMember().getId(),event.getGuild().getId()),event.getMember().getEffectiveName());
              event.reply(response).queue();
         }
         if (event.getName().equals("퇴첵")) {
@@ -28,6 +28,12 @@ public class ObotListenerAdapter extends ListenerAdapter {
             if(response.size() > 1)
                 sendMessage(event.getUser(),response.get(1));
             event.reply(response.get(0)).queue();
+        }
+        if (event.getName().equals("랭킹")) {
+            List<String> responseList = attendance.rankExp(new ID(event.getMember().getId(),event.getGuild().getId()));
+            for(String response : responseList){
+                event.reply(response).queue();
+            }
         }
         if (event.getName().equals("명언")) {
             String response = lifeQuote.getLifeQuoteRandom();

@@ -18,8 +18,9 @@ public class Member {
     private LocalDateTime outdate;
     private Long lv;
     private Long exp;
+    private String username;
 
-    public Member(Long memberid, String userid, String serverid, LocalDateTime indate, LocalDateTime outdate, Long lv, Long exp) {
+    public Member(Long memberid, String userid, String serverid, LocalDateTime indate, LocalDateTime outdate, Long lv, Long exp, String username) {
         this.memberid = memberid;
         this.userid = userid;
         this.serverid = serverid;
@@ -27,6 +28,7 @@ public class Member {
         this.outdate = outdate;
         this.lv = lv;
         this.exp = exp;
+        this.username = username;
     }
 
     public Long getMemberid() {
@@ -83,6 +85,14 @@ public class Member {
 
     public void setExp(Long exp) {
         this.exp = exp;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
 

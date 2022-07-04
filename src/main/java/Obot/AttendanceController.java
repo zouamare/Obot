@@ -11,7 +11,7 @@ import java.util.List;
 public class AttendanceController {
     ObotIO IO = new ObotIO();
 
-    public String startAttendanceCheck(ID id){
+    public String startAttendanceCheck(ID id,String name){
         LocalDateTime now = getTodayDateTime();
         EntityManager em = ObotController.emf.createEntityManager();
         String selectOne = "select m from Member m where m.serverid ='" + id.getServerID() + "'and m.userid='" + id.getUserID() + "'";
@@ -24,7 +24,7 @@ public class AttendanceController {
             member = null;
         }
         if (member == null) {
-            member = new Member(null, id.getUserID(), id.getServerID(), null, null, 0L, 0L);
+            member = new Member(null, id.getUserID(), id.getServerID(), null, null, 0L, 0L,name);
             em.persist(member);
         }
         em.close();
@@ -52,7 +52,9 @@ public class AttendanceController {
             LocalDateTime before = member.getIndate();
             LocalDateTime now = getTodayDateTime();
             member.setIndate(null);
-            member.setExp((Long) (member.getExp()) + (getSeconds(before, now) / 900));
+            long exp =(member.getExp()) + (getSeconds(before, now) / 900);
+            member.setExp((Long) exp);
+            member.setLv(setLv(exp));
             list.add(IO.printLeavingCheckMessage(now));
             //하단에 경험치 증가량, 레벨표시 적용해야함 -> 아직 적용안됨!!
             list.add(IO.printTodayStudyTime(calculateTime(before, now)));
@@ -61,6 +63,35 @@ public class AttendanceController {
             list.add(IO.printNoAttendanceCheckRecord());
         }
         em.close();
+        return list;
+    }
+
+    public List<String> rankExp(ID id){
+        EntityManager em = ObotController.emf.createEntityManager();
+        String selectQuery = "select m from Member m where m.serverid ='" + id.getServerID()+"'order by m.lv desc,m.exp desc";
+        EntityTransaction tx = em.getTransaction();
+        List<String> list = new ArrayList<>();
+        tx.begin();
+        List<Member> memberList;
+        try {
+            memberList = em.createQuery(selectQuery,Member.class).getResultList();
+        }catch (Exception e){
+            memberList = null;
+        }
+        if(memberList !=null){
+            list.add(IO.printRankName());
+            if(memberList.size()>5){
+                for(int i = 0; i<5; i++){
+                    list.add(IO.printRank(i,memberList.get(i)));
+                }
+            }else {
+                for(int i = 0; i<memberList.size(); i++){
+                    list.add(IO.printRank(i,memberList.get(i)));
+                }
+            }
+        }else{
+            list.add(IO.printNoRank());
+        }
         return list;
     }
 
@@ -92,4 +123,16 @@ public class AttendanceController {
         return times;
     }
 
+    private long setLv(long exp){
+        if(exp<16) return 1;
+        if(exp<41) return 2;
+        if(exp<73) return 3;
+        if(exp<120) return 4;
+        if(exp<172) return 5;
+        if(exp<264) return 6;
+        if(exp<370) return 7;
+        if(exp<541) return 8;
+        if(exp<1001) return 9;
+        return 10;
+    }
 }

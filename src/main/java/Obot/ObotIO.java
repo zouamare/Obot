@@ -28,4 +28,16 @@ public class ObotIO {
     public String printPreAttendanceCheckMessage(){
         return "이미 출석체크를 하셨습니다.";
     }
+
+    public String printRank(int rank,Member member){
+        return String.format("%d위 / %s / %d시간 / Lv.%d",rank,member.getUsername(),member.getExp()/4,member.getLv());
+    }
+
+    public String printRankName(){
+        return "**순위 / 이름 / 공부시간 / 레벨**";
+    }
+
+    public String printNoRank(){
+        return "랭크된 인원이 없습니다.";
+    }
 }
