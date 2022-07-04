@@ -30,7 +30,7 @@ public class ObotIO {
     }
 
     public String printRank(int rank,Member member){
-        return String.format("%-17d위/%-17s/%-17d시간/Lv.%-17d",rank,member.getUsername(),member.getExp()/4,member.getLv());
+        return String.format("%-17d위/%-17s/%-17d시간/Lv.%-17d",rank+1,member.getUsername(),member.getExp()/4,member.getLv());
     }
 
     public String printRankName(){
