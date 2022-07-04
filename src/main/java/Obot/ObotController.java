@@ -31,6 +31,7 @@ public class ObotController {
         JDA jda = JDABuilder.createDefault(System.getenv("token"))
                 .setActivity(Activity.playing("공부"))    // 공부 하는 중 표시
                 .build();
+        jda.upsertCommand("랭킹", "랭킹보기").queue();
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         jda.addEventListener(new ObotListenerAdapter());
     }
