@@ -31,9 +31,11 @@ public class ObotListenerAdapter extends ListenerAdapter {
         }
         if (event.getName().equals("랭킹")) {
             List<String> responseList = attendance.rankExp(new ID(event.getMember().getId(),event.getGuild().getId()));
-            for(String response : responseList){
-                event.reply(response).queue();
+            String response = "";
+            for(String re : responseList){
+                response+=re+"\n";
             }
+            event.reply(response.trim()).queue();
         }
         if (event.getName().equals("명언")) {
             String response = lifeQuote.getLifeQuoteRandom();
