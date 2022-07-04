@@ -1,7 +1,11 @@
 package Obot;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.awt.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -66,12 +70,10 @@ public class AttendanceController {
         return list;
     }
 
-    public List<String> rankExp(ID id){
+    public MessageEmbed rankExp(ID id){
         EntityManager em = ObotController.emf.createEntityManager();
         String selectQuery = "select m from Member m where m.serverid ='" + id.getServerID()+"'order by m.lv desc,m.exp desc";
-        EntityTransaction tx = em.getTransaction();
-        List<String> list = new ArrayList<>();
-        tx.begin();
+        EmbedBuilder embedBuilder = new EmbedBuilder();
         List<Member> memberList;
         try {
             memberList = em.createQuery(selectQuery,Member.class).getResultList();
@@ -79,20 +81,19 @@ public class AttendanceController {
             memberList = null;
         }
         if(memberList !=null){
-            list.add(IO.printRankName());
-            if(memberList.size()>5){
-                for(int i = 0; i<5; i++){
-                    list.add(IO.printRank(i,memberList.get(i)));
-                }
-            }else {
-                for(int i = 0; i<memberList.size(); i++){
-                    list.add(IO.printRank(i,memberList.get(i)));
-                }
-            }
+            embedBuilder.setColor(Color.CYAN);
+            embedBuilder.setTitle("**공부랭킹**");
+            List<String> makeRankString = IO.makeRankString(memberList);
+            embedBuilder.addField("순위",makeRankString.get(0),true);
+            embedBuilder.addField("이름",makeRankString.get(1),true);
+            embedBuilder.addField("공부시간",makeRankString.get(2),true);
+            embedBuilder.addField("레벨",makeRankString.get(3),true);
+
         }else{
-            list.add(IO.printNoRank());
+            embedBuilder.setTitle(IO.printNoRank());
         }
-        return list;
+
+        return embedBuilder.build();
     }
 
     private LocalDateTime getTodayDateTime() {

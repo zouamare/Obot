@@ -1,5 +1,6 @@
 package Obot;
 
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -30,12 +31,8 @@ public class ObotListenerAdapter extends ListenerAdapter {
             event.reply(response.get(0)).queue();
         }
         if (event.getName().equals("랭킹")) {
-            List<String> responseList = attendance.rankExp(new ID(event.getMember().getId(),event.getGuild().getId()));
-            String response = "";
-            for(String re : responseList){
-                response+=re+"\n";
-            }
-            event.reply(response.trim()).queue();
+            MessageEmbed response = attendance.rankExp(new ID(event.getMember().getId(),event.getGuild().getId()));
+            event.replyEmbeds(response).queue();
         }
         if (event.getName().equals("명언")) {
             String response = lifeQuote.getLifeQuoteRandom();

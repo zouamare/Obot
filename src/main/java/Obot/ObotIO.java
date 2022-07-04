@@ -2,6 +2,8 @@ package Obot;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ObotIO {
 
@@ -40,4 +42,30 @@ public class ObotIO {
     public String printNoRank(){
         return "랭크된 인원이 없습니다.";
     }
+
+    public List<String> makeRankString(List<Member> members){
+        List<String> resultList;
+        String username = members.get(0).getUsername();
+        String rank = "1위";
+        String time = members.get(0).getExp()/4+"시간";
+        String lv = "Lv."+members.get(0).getLv();
+        if(members.size()>5){
+            for(int i = 1; i<5; i++){
+                username+="\n"+members.get(i).getUsername();
+                rank+="\n"+(i+1)+"위";
+                time+="\n"+members.get(i).getExp()/4+"시간";
+                lv +="\nLv."+members.get(0).getLv();
+            }
+        }else{
+            for(int i = 1; i<members.size(); i++){
+                username+="\n"+members.get(i).getUsername();
+                rank+="\n"+(i+1)+"위";
+                time+="\n"+members.get(i).getExp()/4+"시간";
+                lv +="\nLv."+members.get(0).getLv();
+            }
+        }
+        resultList=List.of(username,rank,time,lv);
+        return resultList;
+    }
+
 }
