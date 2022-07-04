@@ -30,11 +30,11 @@ public class ObotIO {
     }
 
     public String printRank(int rank,Member member){
-        return String.format("%-17d위/%-17s/%-17d시간/Lv.%-17d",rank+1,member.getUsername(),member.getExp()/4,member.getLv());
+        return String.format("%d위/%-30s/%4d시간/Lv.%-d",rank+1,member.getUsername(),member.getExp()/4,member.getLv());
     }
 
     public String printRankName(){
-        return String.format("**%-17s/%-17s/%-17s/%-17s**","순위","이름","공부시간","레벨");
+        return String.format("**%s/%-30s/%s/%s**","순위","이름","공부시간","레벨");
     }
 
     public String printNoRank(){
