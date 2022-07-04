@@ -31,13 +31,6 @@ public class ObotIO {
         return "이미 출석체크를 하셨습니다.";
     }
 
-    public String printRank(int rank,Member member){
-        return String.format("%d위/%-30s/%4d시간/Lv.%d",rank+1,member.getUsername(),member.getExp()/4,member.getLv());
-    }
-
-    public String printRankName(){
-        return String.format("**%s/%-30s/%s/%s**","순위","이름","공부시간","레벨");
-    }
 
     public String printNoRank(){
         return "랭크된 인원이 없습니다.";
@@ -45,20 +38,20 @@ public class ObotIO {
 
     public List<String> makeRankString(List<Member> members){
         List<String> resultList;
-        String rank = "1위 "+members.get(0).getUsername();
-        String time = members.get(0).getExp()/4+"시간";
-        String lv = "Lv."+members.get(0).getLv();
+        String rank = "`1위 "+members.get(0).getUsername()+"`";
+        String time = "`"+members.get(0).getExp()/4+"시간`";
+        String lv = "`Lv."+members.get(0).getLv()+"`";
         if(members.size()>5){
             for(int i = 1; i<5; i++){
-                rank+="\n"+(i+1)+"위 "+members.get(i).getUsername();
-                time+="\n"+members.get(i).getExp()/4+"시간";
-                lv +="\nLv."+members.get(0).getLv();
+                rank+="\n`"+(i+1)+"위 "+members.get(i).getUsername()+"`";
+                time+="\n`"+members.get(i).getExp()/4+"시간`";
+                lv +="\n`Lv."+members.get(i).getLv()+"`";
             }
         }else{
             for(int i = 1; i<members.size(); i++){
-                rank+="\n"+(i+1)+"위 "+members.get(i).getUsername();
-                time+="\n"+members.get(i).getExp()/4+"시간";
-                lv +="\nLv."+members.get(0).getLv();
+                rank+="\n`"+(i+1)+"위 "+members.get(i).getUsername()+"`";
+                time+="\n`"+members.get(i).getExp()/4+"시간`";
+                lv +="\n`Lv."+members.get(i).getLv()+"`";
             }
         }
         resultList=List.of(rank,time,lv);
