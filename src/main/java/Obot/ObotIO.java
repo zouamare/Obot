@@ -45,26 +45,23 @@ public class ObotIO {
 
     public List<String> makeRankString(List<Member> members){
         List<String> resultList;
-        String username = members.get(0).getUsername();
-        String rank = "1위";
+        String rank = "1위 "+members.get(0).getUsername();
         String time = members.get(0).getExp()/4+"시간";
         String lv = "Lv."+members.get(0).getLv();
         if(members.size()>5){
             for(int i = 1; i<5; i++){
-                username+="\n"+members.get(i).getUsername();
-                rank+="\n"+(i+1)+"위";
+                rank+="\n"+(i+1)+"위 "+members.get(i).getUsername();
                 time+="\n"+members.get(i).getExp()/4+"시간";
                 lv +="\nLv."+members.get(0).getLv();
             }
         }else{
             for(int i = 1; i<members.size(); i++){
-                username+="\n"+members.get(i).getUsername();
-                rank+="\n"+(i+1)+"위";
+                rank+="\n"+(i+1)+"위 "+members.get(i).getUsername();
                 time+="\n"+members.get(i).getExp()/4+"시간";
                 lv +="\nLv."+members.get(0).getLv();
             }
         }
-        resultList=List.of(username,rank,time,lv);
+        resultList=List.of(rank,time,lv);
         return resultList;
     }
 
