@@ -83,7 +83,7 @@ public class AttendanceController {
         if(memberList !=null){
             embedBuilder.setColor(Color.CYAN);
             embedBuilder.setTitle("**공부랭킹**");
-            embedBuilder.setDescription("얼마나 공부하셨나요?! 랭커가 되기를 바랍니다!");
+            embedBuilder.setDescription("얼마나 공부하셨나요?! 랭커가 되기를 바랍니다!").setColor(Color.ORANGE);
             List<String> makeRankString = IO.makeRankString(memberList);
             embedBuilder.addField("순위",makeRankString.get(0),true);
             embedBuilder.addField("공부시간",makeRankString.get(1),true);
